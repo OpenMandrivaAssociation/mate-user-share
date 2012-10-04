@@ -13,6 +13,7 @@ Suggests: apache
 Suggests: apache-mod_dnssd >= 0.6
 Requires: obex-data-server >= 0.3
 BuildRequires: apache-mod_dnssd
+BuildRequires: mate-common
 BuildRequires: mate-conf-devel
 BuildRequires: pkgconfig(libmatenotify)
 BuildRequires: mate-bluetooth-devel
