@@ -1,29 +1,37 @@
-%define materel 1.4
-%define uprel 1
+%define url_ver %(echo %{version}|cut -d. -f1,2)
 
-Summary: MATE user file sharing
-Name: mate-user-share
-Version: %{materel}.%{uprel}
-Release: 1
-License: GPLv2+
-Group: System/Servers
-URL: http://www.mate-desktop.org
-Source0: http://pub.mate-desktop.org/releases/%{materel}/mate-user-share-%{version}.tar.xz
-Suggests: apache
-Suggests: apache-mod_dnssd >= 0.6
-Requires: obex-data-server >= 0.3
-BuildRequires: apache-mod_dnssd
-BuildRequires: mate-common
-BuildRequires: mate-conf-devel
-BuildRequires: pkgconfig(libmatenotify)
-BuildRequires: mate-bluetooth-devel
-BuildRequires: dbus-glib-devel
-BuildRequires: pkgconfig(libcanberra-gtk)
-BuildRequires: unique-devel
-BuildRequires: pkgconfig(libcaja-extension)
-BuildRequires: intltool
-BuildRequires: mate-doc-utils
-BuildRequires:	desktop-file-utils
+Name:           mate-user-share
+Version:        1.6.0
+Release:        1
+License:        GPLv2+
+Summary:        MATE  user file sharing
+URL:            http://mate-desktop.org
+Group:          System/Servers
+Source0:        http://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
+# This patch fixes 'AM_CONFIG_HEADER' macro is deprecated error
+Patch0:         mate-user-share-1.6.0-mga-fix-configure_in-script.patch
+
+BuildRequires:  apache-devel
+BuildRequires:  itstool
+BuildRequires:  libxml2-utils
+BuildRequires:  intltool
+BuildRequires:  xml2po
+BuildRequires:  pkgconfig(dbus-1)
+BuildRequires:  hicolor-icon-theme
+BuildRequires:  mate-common
+BuildRequires:  pkgconfig(dbus-glib-1)
+BuildRequires:  pkgconfig(libcaja-extension)
+BuildRequires:  pkgconfig(libnotify)
+BuildRequires:  pkgconfig(libcanberra-gtk)
+BuildRequires:  pkgconfig(gdk-x11-2.0)
+BuildRequires:  pkgconfig(gtk+-2.0)
+BuildRequires:  pkgconfig(mate-bluetooth-1.0)
+BuildRequires:  pkgconfig(mate-doc-utils)
+BuildRequires:  pkgconfig(unique-1.0)
+
+Suggests:       apache
+Suggests:       apache-mod_dnssd >= 0.6
+Requires:       obex-data-server >= 0.3
 
 %description
 This program enables user to share directories through Webdav or Bluetooth
@@ -31,26 +39,30 @@ This program enables user to share directories through Webdav or Bluetooth
 
 %prep
 %setup -q
+%apply_patches
 
 %build
-NOCONFIGURE=yes ./autogen.sh
+NOCONFIGURE=1 ./autogen.sh
 %configure2_5x \
-	--with-modules-path=%_sysconfdir/httpd/modules \
-	--disable-schemas-install
+   --disable-schemas-install \
+   --with-modules-path=%{_sysconfdir}/httpd/modules \
+   --disable-scrollkeeper
 %make
 
 %install
 %makeinstall_std
-desktop-file-edit --remove-category=MATE --add-category=X-MATE %{buildroot}%{_datadir}/applications/mate-user-share-properties.desktop
-%find_lang %name --with-gnome
+%find_lang %{name}
 
-%files -f %name.lang
-%doc README ChangeLog NEWS
-%_sysconfdir/xdg/autostart/mate-user-share.desktop
-%{_sysconfdir}/mateconf/schemas/desktop_mate_file_sharing.schemas
-%{_bindir}/*
-%{_datadir}/mate-user-share
-%_datadir/applications/mate-user-share-properties.desktop
-%_libexecdir/mate-user-share
-%_datadir/icons/hicolor/*/apps/*.*
-%_libdir/caja/extensions-2.0/libcaja-share-extension.so
+%files -f %{name}.lang
+%doc ChangeLog README COPYING
+%config(noreplace) %{_sysconfdir}/xdg/autostart/%{name}.desktop
+%{_bindir}/mate-file-share-properties
+%{_libexecdir}/%{name}/
+%{_libdir}/caja/
+%{_datadir}/%{name}/
+%{_datadir}/applications/mate-user-share-properties.desktop
+%{_datadir}/icons/hicolor/
+%{_datadir}/glib-2.0/schemas/org.mate.FileSharing.gschema.xml
+%{_datadir}/MateConf/*
+
+

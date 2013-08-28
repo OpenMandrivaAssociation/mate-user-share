@@ -1,0 +1,11 @@
+--- mate-user-share-1.6.0/configure.in~	2013-04-03 00:49:30.000000000 +0300
++++ mate-user-share-1.6.0/configure.in	2013-05-12 23:07:41.722840046 +0300
+@@ -1,7 +1,7 @@
+ AC_INIT(mate-user-share, 1.6.0)
+ 
+ AM_INIT_AUTOMAKE([1.9 dist-bzip2 no-dist-gzip check-news])
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_HEADERS(config.h)
+ 
+ # Enable silent build when available (Automake 1.11)
+ m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
