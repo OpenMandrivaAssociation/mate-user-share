@@ -39,7 +39,7 @@ This program enables user to share directories through Webdav or Bluetooth
 
 %prep
 %setup -q
-%apply_patches
+# %apply_patches
 
 %build
 NOCONFIGURE=1 ./autogen.sh
