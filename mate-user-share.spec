@@ -39,10 +39,18 @@ This program enables user to share directories through Webdav or Bluetooth
 
 %prep
 %setup -q
-# %apply_patches
+%apply_patches
 
 %build
-NOCONFIGURE=1 ./autogen.sh
+aclocal
+libtoolize --force --automake --copy
+autoheader
+automake --add-missing --copy
+autoconf
+cp configure.ac configure.in
+# NOCONFIGURE=1 sh ./autogen.sh
+intltoolize --copy --force
+
 %configure2_5x \
    --disable-schemas-install \
    --with-modules-path=%{_sysconfdir}/httpd/modules \
