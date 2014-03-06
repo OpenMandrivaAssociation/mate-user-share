@@ -9,7 +9,7 @@ URL:            http://mate-desktop.org
 Group:          System/Servers
 Source0:        http://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
 # This patch fixes 'AM_CONFIG_HEADER' macro is deprecated error
-Patch0:         mate-user-share-1.6.0-mga-fix-configure_in-script.patch
+# Patch0:         mate-user-share-1.6.0-mga-fix-configure_in-script.patch
 
 BuildRequires:  apache-devel
 BuildRequires:  itstool
@@ -39,7 +39,7 @@ This program enables user to share directories through Webdav or Bluetooth
 
 %prep
 %setup -q
-%apply_patches
+# %apply_patches
 
 %build
 aclocal
