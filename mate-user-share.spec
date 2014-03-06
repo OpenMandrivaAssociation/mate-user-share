@@ -81,5 +81,5 @@ rm -fr  %{buildroot}%{_sysconfdir}/xdg/autostart/mate-user-share-obex*
 %{_datadir}/applications/mate-user-share-properties.desktop
 %{_datadir}/icons/hicolor/
 %{_datadir}/glib-2.0/schemas/org.mate.FileSharing.gschema.xml
-%{_datadir}/help/*/mate-user-share
+#%{_datadir}/help/*/mate-user-share
 %{_mandir}/man1/mate-file-share-properties.1*
