@@ -8,14 +8,11 @@ Summary:        MATE  user file sharing
 URL:            http://mate-desktop.org
 Group:          System/Servers
 Source0:        http://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
-# This patch fixes 'AM_CONFIG_HEADER' macro is deprecated error
-# Patch0:         mate-user-share-1.6.0-mga-fix-configure_in-script.patch
 
 BuildRequires:  apache-devel
 BuildRequires:  itstool
 BuildRequires:  libxml2-utils
-BuildRequires:  intltool
-BuildRequires:  xml2po
+BuildRequires:  itstool
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  hicolor-icon-theme
 BuildRequires:  mate-common
@@ -25,41 +22,54 @@ BuildRequires:  pkgconfig(libnotify)
 BuildRequires:  pkgconfig(libcanberra-gtk)
 BuildRequires:  pkgconfig(gdk-x11-2.0)
 BuildRequires:  pkgconfig(gtk+-2.0)
-BuildRequires:  pkgconfig(mate-bluetooth-1.0)
-BuildRequires:  pkgconfig(mate-doc-utils)
+BuildRequires:  perl(XML::Parser)
 BuildRequires:  pkgconfig(unique-1.0)
+BuildRequires:  pkgconfig(ice)
+BuildRequires:  pkgconfig(sm)
+BuildRequires:  yelp-tools
 
 Suggests:       apache
-Suggests:       apache-mod_dnssd >= 0.6
-Requires:       obex-data-server >= 0.3
+
+# already not working bluetooth support dropped by upstream:
+Obsoletes:		mate-bluetooth
+Obsoletes:		mate-file-manager-sendto-bluetooth
+Obsoletes:		libmate-bluetooth-devel
+Obsoletes:		libmate-bluetooth-gir1.0
+Obsoletes:		libmate-bluetooth8
+Conflicts:		mate-bluetooth
+Conflicts:		mate-file-manager-sendto-bluetooth
+Conflicts:		libmate-bluetooth-devel
+Conflicts:		libmate-bluetooth-gir1.0
+Conflicts:		libmate-bluetooth8
 
 %description
-This program enables user to share directories through Webdav or Bluetooth
-(over ObexFTP).
+This program enables user to share directories through Webdav.
+
+This package does not provide bluetooth support. Use a generic
+tool to get bluetooth support.
 
 %prep
 %setup -q
-# %apply_patches
+%apply_patches
 
 %build
-aclocal
-libtoolize --force --automake --copy
-autoheader
-automake --add-missing --copy
-autoconf
-cp configure.ac configure.in
-# NOCONFIGURE=1 sh ./autogen.sh
-intltoolize --copy --force
-
 %configure2_5x \
-   --disable-schemas-install \
-   --with-modules-path=%{_sysconfdir}/httpd/modules \
-   --disable-scrollkeeper
+   --disable-scrollkeeper \
+   --disable-static \
+   --disable-bluetooth \
+   --disable-schemas-compile
 %make
 
 %install
 %makeinstall_std
-%find_lang %{name}
+
+# remove needless gsettings convert file to avoid slow session start
+rm -fr  %{buildroot}%{_datadir}/MateConf
+
+# remove obsolete bluetooth stuff
+rm -fr  %{buildroot}%{_sysconfdir}/xdg/autostart/mate-user-share-obex*
+
+%find_lang %{name} --with-gnome --all-name
 
 %files -f %{name}.lang
 %doc ChangeLog README
