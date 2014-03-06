@@ -1,2 +1,4 @@
+removed_sources:
+  mate-user-share-1.6.0.tar.xz: 03f5731a29bc53a9ff6882d33b2a45d0270e48e1
 sources:
-  "mate-user-share-1.6.0.tar.xz": 03f5731a29bc53a9ff6882d33b2a45d0270e48e1
+  mate-user-share-1.8.0.tar.xz: dbeab8c06b098b2787b68541810e268c70764b14

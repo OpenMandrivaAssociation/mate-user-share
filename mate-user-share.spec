@@ -1,7 +1,7 @@
 %define url_ver %(echo %{version}|cut -d. -f1,2)
 
 Name:           mate-user-share
-Version:        1.6.0
+Version:        1.8.0
 Release:        1
 License:        GPLv2+
 Summary:        MATE  user file sharing
@@ -62,15 +62,14 @@ intltoolize --copy --force
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc ChangeLog README COPYING
-%config(noreplace) %{_sysconfdir}/xdg/autostart/%{name}.desktop
+%doc ChangeLog README
+%config(noreplace) %{_sysconfdir}/xdg/autostart/mate-user-share-webdav.desktop
 %{_bindir}/mate-file-share-properties
-%{_libexecdir}/%{name}/
+%{_libexecdir}/%{name}
 %{_libdir}/caja/
 %{_datadir}/%{name}/
 %{_datadir}/applications/mate-user-share-properties.desktop
 %{_datadir}/icons/hicolor/
 %{_datadir}/glib-2.0/schemas/org.mate.FileSharing.gschema.xml
-%{_datadir}/MateConf/*
-
-
+%{_datadir}/help/*/mate-user-share
+%{_mandir}/man1/mate-file-share-properties.1*
