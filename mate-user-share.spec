@@ -10,7 +10,7 @@ Url:		http://www.mate-desktop.org
 Source0:	http://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
 BuildRequires:	apache-mod_dnssd
 BuildRequires:	intltool
-BuildRequires:	itstool
+BuildRequires:	yelp-tools
 BuildRequires:	pkgconfig(dbus-glib-1)
 BuildRequires:	pkgconfig(libcaja-extension)
 BuildRequires:	pkgconfig(libcanberra-gtk)
