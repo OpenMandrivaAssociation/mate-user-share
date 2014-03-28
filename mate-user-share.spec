@@ -1,28 +1,24 @@
-%define materel 1.4
-%define uprel 1
+%define url_ver %(echo %{version}|cut -d. -f1,2)
 
-Summary: MATE user file sharing
-Name: mate-user-share
-Version: %{materel}.%{uprel}
-Release: 1
-License: GPLv2+
-Group: System/Servers
-URL: http://www.mate-desktop.org
-Source0: http://pub.mate-desktop.org/releases/%{materel}/mate-user-share-%{version}.tar.xz
-Suggests: apache
-Suggests: apache-mod_dnssd >= 0.6
-Requires: obex-data-server >= 0.3
-BuildRequires: apache-mod_dnssd
-BuildRequires: mate-conf-devel
-BuildRequires: pkgconfig(libmatenotify)
-BuildRequires: mate-bluetooth-devel
-BuildRequires: dbus-glib-devel
-BuildRequires: pkgconfig(libcanberra-gtk)
-BuildRequires: unique-devel
-BuildRequires: pkgconfig(libcaja-extension)
-BuildRequires: intltool
-BuildRequires: mate-doc-utils
-BuildRequires:	desktop-file-utils
+Summary:	MATE user file sharing
+Name:		mate-user-share
+Version:	1.8.0
+Release:	1
+License:	GPLv2+
+Group:		System/Servers
+Url:		http://www.mate-desktop.org
+Source0:	http://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
+BuildRequires:	apache-mod_dnssd
+BuildRequires:	intltool
+BuildRequires:	itstool
+BuildRequires:	pkgconfig(dbus-glib-1)
+BuildRequires:	pkgconfig(libcaja-extension)
+BuildRequires:	pkgconfig(libcanberra-gtk)
+BuildRequires:	pkgconfig(libnotify)
+BuildRequires:	pkgconfig(unique-1.0)
+Suggests:	apache
+Suggests:	apache-mod_dnssd >= 0.6
+Requires:	obex-data-server >= 0.3
 
 %description
 This program enables user to share directories through Webdav or Bluetooth
@@ -32,24 +28,29 @@ This program enables user to share directories through Webdav or Bluetooth
 %setup -q
 
 %build
-NOCONFIGURE=yes ./autogen.sh
 %configure2_5x \
-	--with-modules-path=%_sysconfdir/httpd/modules \
-	--disable-schemas-install
+	--with-modules-path=%{_sysconfdir}/httpd/modules
 %make
 
 %install
 %makeinstall_std
-desktop-file-edit --remove-category=MATE --add-category=X-MATE %{buildroot}%{_datadir}/applications/mate-user-share-properties.desktop
-%find_lang %name --with-gnome
 
-%files -f %name.lang
+# remove unneeded converter
+rm -fr %{buildroot}%{_datadir}/MateConf
+
+%find_lang %{name} --with-gnome
+
+%files -f %{name}.lang
 %doc README ChangeLog NEWS
-%_sysconfdir/xdg/autostart/mate-user-share.desktop
-%{_sysconfdir}/mateconf/schemas/desktop_mate_file_sharing.schemas
+%{_sysconfdir}/xdg/autostart/mate-user-share-obexftp.desktop
+%{_sysconfdir}/xdg/autostart/mate-user-share-obexpush.desktop
+%{_sysconfdir}/xdg/autostart/mate-user-share-webdav.desktop
 %{_bindir}/*
+%{_datadir}/applications/mate-user-share-properties.desktop
+%{_datadir}/glib-2.0/schemas/org.mate.FileSharing.gschema.xml
 %{_datadir}/mate-user-share
-%_datadir/applications/mate-user-share-properties.desktop
-%_libexecdir/mate-user-share
-%_datadir/icons/hicolor/*/apps/*.*
-%_libdir/caja/extensions-2.0/libcaja-share-extension.so
+%{_iconsdir}/hicolor/*/apps/*.*
+%{_libdir}/caja/extensions-2.0/libcaja-share-extension.so
+%{_libexecdir}/mate-user-share
+%{_mandir}/man1/mate-file-share-properties.1*
+
