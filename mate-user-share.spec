@@ -3,7 +3,7 @@
 Summary:	MATE user file sharing
 Name:		mate-user-share
 Version:	1.8.0
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		System/Servers
 Url:		http://www.mate-desktop.org
