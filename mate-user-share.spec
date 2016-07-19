@@ -2,20 +2,20 @@
 
 Summary:	MATE user file sharing
 Name:		mate-user-share
-Version:	1.8.0
-Release:	2
+Version:	1.14.0
+Release:	1
 License:	GPLv2+
 Group:		System/Servers
 Url:		http://www.mate-desktop.org
 Source0:	http://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
-BuildRequires:	apache-mod_dnssd
 BuildRequires:	intltool
 BuildRequires:	yelp-tools
 BuildRequires:	pkgconfig(dbus-glib-1)
 BuildRequires:	pkgconfig(libcaja-extension)
-BuildRequires:	pkgconfig(libcanberra-gtk)
+BuildRequires:	pkgconfig(libcanberra-gtk3)
 BuildRequires:	pkgconfig(libnotify)
-BuildRequires:	pkgconfig(unique-1.0)
+BuildRequires:	pkgconfig(unique-3.0)
+BuildRequires:	pkgconfig(gtk+-3.0)
 Suggests:	apache
 Suggests:	apache-mod_dnssd >= 0.6
 Requires:	obex-data-server >= 0.3
@@ -29,7 +29,7 @@ This program enables user to share directories through Webdav or Bluetooth
 
 %build
 %configure2_5x \
-	--with-modules-path=%{_sysconfdir}/httpd/modules
+	--with-modules-path=%{_sysconfdir}/httpd/modules --with-gtk=3.0
 %make
 
 %install
@@ -50,7 +50,8 @@ rm -fr %{buildroot}%{_datadir}/MateConf
 %{_datadir}/glib-2.0/schemas/org.mate.FileSharing.gschema.xml
 %{_datadir}/mate-user-share
 %{_iconsdir}/hicolor/*/apps/*.*
-%{_libdir}/caja/extensions-2.0/libcaja-share-extension.so
+%{_libdir}/caja/extensions-2.0/libcaja-user-share.so
+%{_datadir}/caja/extensions/libcaja-user-share.caja-extension
 %{_libexecdir}/mate-user-share
 %{_mandir}/man1/mate-file-share-properties.1*
 
