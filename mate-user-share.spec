@@ -2,7 +2,7 @@
 
 Summary:	MATE user file sharing
 Name:		mate-user-share
-Version:	1.14.0
+Version:	1.18.0
 Release:	1
 License:	GPLv2+
 Group:		System/Servers
@@ -28,20 +28,19 @@ This program enables user to share directories through Webdav or Bluetooth
 %setup -q
 
 %build
-%configure2_5x \
-	--with-modules-path=%{_sysconfdir}/httpd/modules --with-gtk=3.0
+%configure \
+	--with-modules-path=%{_sysconfdir}/httpd/modules \
+	%{nil}
 %make
 
 %install
 %makeinstall_std
 
-# remove unneeded converter
-rm -fr %{buildroot}%{_datadir}/MateConf
-
+# locales
 %find_lang %{name} --with-gnome
 
 %files -f %{name}.lang
-%doc README ChangeLog NEWS
+%doc README ChangeLog NEWS COPYING
 %{_sysconfdir}/xdg/autostart/mate-user-share-obexftp.desktop
 %{_sysconfdir}/xdg/autostart/mate-user-share-obexpush.desktop
 %{_sysconfdir}/xdg/autostart/mate-user-share-webdav.desktop
