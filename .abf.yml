@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   mate-user-share-1.14.0.tar.xz: 95491485a0769f252e068ed2256f1a3386330094
+sources:
+  mate-user-share-1.18.0.tar.xz: 1ae23e4e74fc1fffd8207fd15751092763c46ca4
