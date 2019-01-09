@@ -2,7 +2,7 @@
 
 Summary:	MATE user file sharing
 Name:		mate-user-share
-Version:	1.20.0
+Version:	1.20.1
 Release:	1
 License:	GPLv2+
 Group:		System/Servers
@@ -72,16 +72,17 @@ mDNSResolver running.
 
 %prep
 %setup -q
+%autopatch -p1
 
 %build
 %configure \
 	--disable-schemas-compile \
 	--with-modules-path=%{_sysconfdir}/httpd/modules \
 	%{nil}
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 
 # locales
 %find_lang %{name} --with-gnome --all-name
