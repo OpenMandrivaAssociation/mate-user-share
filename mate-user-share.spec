@@ -2,7 +2,7 @@
 
 Summary:	MATE user file sharing
 Name:		mate-user-share
-Version:	1.24.0
+Version:	1.26.0
 Release:	1
 License:	GPLv2+
 Group:		System/Servers
