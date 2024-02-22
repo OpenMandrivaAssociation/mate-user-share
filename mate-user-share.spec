@@ -1,13 +1,13 @@
-%define url_ver %(echo %{version}|cut -d. -f1,2)
+%define mate_ver	%(echo %{version}|cut -d. -f1,2)
 
 Summary:	MATE user file sharing
 Name:		mate-user-share
-Version:	1.26.0
-Release:	2
+Version:	1.28.0
+Release:	1
 License:	GPLv2+
 Group:		System/Servers
 Url:		https://www.mate-desktop.org
-Source0:	https://pub.mate-desktop.org/releases/%{url_ver}/%{name}-%{version}.tar.xz
+Source0:	https://pub.mate-desktop.org/releases/%{mate_ver}/%{name}-%{version}.tar.xz
 
 BuildRequires:	autoconf-archive
 BuildRequires:	apache-devel
@@ -72,8 +72,7 @@ mDNSResolver running.
 #---------------------------------------------------------------------------
 
 %prep
-%setup -q
-%autopatch -p1
+%autosetup -p1
 
 %build
 %configure \
